@@ -26,3 +26,29 @@ function verificarDatasPassadas() {
 document.addEventListener('DOMContentLoaded', () => {
     verificarDatasPassadas();
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const rows = document.querySelectorAll('tr[data-date]');
+    const today = new Date();
+    
+    rows.forEach(row => {
+        const dateStr = row.getAttribute('data-date');
+        const date = new Date(dateStr);
+        
+        // Calcula a diferença em dias
+        const diffTime = date.getTime() - today.getTime();
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        // Remove classes existentes
+        row.classList.remove('status-past', 'status-current', 'status-future');
+        
+        // Adiciona a classe apropriada
+        if (diffDays < 0) {
+            row.classList.add('status-past');
+        } else if (diffDays <= 7) {
+            row.classList.add('status-current');
+        } else {
+            row.classList.add('status-future');
+        }
+    });
+});

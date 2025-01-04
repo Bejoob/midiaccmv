@@ -401,3 +401,23 @@ section:nth-child(5) { animation-delay: 0.4s; }
         padding: 8px 12px;
     }
 } 
+
+.status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.status-future .status-dot {
+    background-color: #4CAF50;  /* Verde */
+}
+
+.status-current .status-dot {
+    background-color: #FFC107;  /* Amarelo */
+}
+
+.status-past .status-dot {
+    background-color: #F44336;  /* Vermelho */
+} 
