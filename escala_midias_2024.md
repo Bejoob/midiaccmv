@@ -7,24 +7,31 @@
 - **Slides e Story:** Mari
 - **Slides:** Breno
 
-### Dezembro 2024
+### Junho 2025
 
 | Data | Story | Fotos/Story | Slides |
 |------|--------|-------------|---------|
-| 01/12 | Alana | Mell | Mari |
-| 08/12 | Luiza | Mell | Breno |
-| 15/12 | Alana | Mell | Mari |
-| 22/12 | Luiza | Mell | Breno |
-| 29/12 | Alana | Mell | Mari |
+| 22/06 | Alana | Mell | Thania |
+| 29/06 | Manuella | Mell | Mari |
 
-### Janeiro 2025
+### Julho 2025
 
 | Data | Story | Fotos/Story | Slides |
 |------|--------|-------------|---------|
-| 05/01 | Luiza | Mell | Breno |
-| 12/01 | Alana | Mell | Mari |
-| 19/01 | Luiza | Mell | Breno |
-| 26/01 | Alana | Mell | Mari |
+| 06/07 | Mell | Mell | Luiza |
+| 13/07 | Mari | Mell | Breno |
+| 20/07 | Alana | Mell | Thania |
+| 27/07 | Manuella | Mell | Mari |
+
+### Agosto 2025
+
+| Data | Story | Fotos/Story | Slides |
+|------|--------|-------------|---------|
+| 03/08 | Mell | Mell | Luiza |
+| 10/08 | Mari | Mell | Breno |
+| 17/08 | Alana | Mell | Thania |
+| 24/08 | Manuella | Mell | Mari |
+| 31/08 | Mell | Mell | Luiza |
 
 ### Observações:
 - A escala considera os cultos de domingo
