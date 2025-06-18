@@ -30,13 +30,11 @@ body {
 header {
     text-align: center;
     margin-bottom: 40px;
-    background: linear-gradient(135deg, var(--neutral-color), var(--primary-color));
+    background: linear-gradient(135deg, #d7ccc8 0%, #000000 100%);
     padding: 40px 20px;
-    border-radius: 15px;
-    box-shadow: var(--shadow);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     color: white;
-    transform: translateY(0);
-    transition: var(--transition);
     position: relative;
     overflow: hidden;
 }
@@ -47,48 +45,144 @@ header::before {
     top: 0;
     left: 0;
     right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, var(--neutral-color), var(--primary-color), var(--neutral-color));
-    animation: gradient 3s ease infinite;
-    background-size: 200% 200%;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    pointer-events: none;
 }
 
-.logo {
-    margin-bottom: 30px;
-    background: white;
-    width: 200px; /* Aumentado para destacar o logo */
-    height: 200px;
-    border-radius: 50%;
+.header-content {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 30px;
-    padding: 20px; /* Reduzido para ajustar a proporção */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    border: 5px solid rgba(215, 204, 200, 0.2);
-    transition: var(--transition);
+    gap: 30px;
+    position: relative;
+    z-index: 2;
+}
+
+.logo-container {
+    background: white;
+    width: 120px;
+    height: 120px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    border: 3px solid rgba(255, 255, 255, 0.2);
 }
 
 .logo-img {
-    width: 100%; /* Agora o logo ocupa toda a largura do container */
-    height: auto; /* Mantém a proporção original da imagem */
-    object-fit: contain; /* Ajustado para garantir que a imagem inteira seja visível */
-    transition: var(--transition); /* Suaviza a interação */
-    display: block; /* Centraliza dentro do container pai */
-    margin: auto;
-    border-radius: 50%; /* Mantém o formato circular */
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 15px;
+    transition: all 0.3s ease;
 }
 
+.header-text {
+    text-align: left;
+}
+
+.header-text h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    background: linear-gradient(45deg, #fff, #f0f0f0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.header-text h2 {
+    font-size: 1.4em;
+    opacity: 0.9;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    color: #e8e8e8;
+}
+
+.header-subtitle {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.subtitle-line {
+    font-size: 0.9em;
+    opacity: 0.8;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: #d0d0d0;
+}
+
+.header-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+    position: relative;
+    z-index: 2;
+}
+
+.decoration-line {
+    height: 2px;
+    width: 60px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+    border-radius: 1px;
+}
+
+.decoration-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.decoration-dots span {
+    width: 8px;
+    height: 8px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 50%;
+    animation: bounce 2s infinite;
+}
+
+.decoration-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.decoration-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
 
 header:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
 }
 
-header:hover .logo {
-    transform: scale(1.1); /* Leve aumento no tamanho */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Realce visual */
+header:hover .logo-container {
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+header:hover .logo-img {
+    transform: scale(1.1);
 }
 
 h1 {
@@ -269,39 +363,64 @@ tbody tr:hover {
 
 @media (max-width: 768px) {
     .container {
-        padding: 10px;
+        padding: 15px;
     }
 
     header {
-        padding: 20px;
+        padding: 30px 15px;
+        border-radius: 15px;
     }
 
-    h1 {
-        font-size: 1.8em;
+    .header-content {
+        flex-direction: column;
+        gap: 20px;
     }
 
-    h2 {
+    .logo-container {
+        width: 100px;
+        height: 100px;
+        padding: 12px;
+    }
+
+    .header-text {
+        text-align: center;
+    }
+
+    .header-text h1 {
+        font-size: 2em;
+        letter-spacing: 1px;
+    }
+
+    .header-text h2 {
         font-size: 1.2em;
+    }
+
+    .header-decoration {
+        margin-top: 20px;
+    }
+
+    .decoration-line {
+        width: 40px;
     }
 
     section {
         padding: 20px;
+        margin-bottom: 20px;
     }
 
     th, td {
         padding: 10px;
-        font-size: 14px;
+        font-size: 0.9em;
     }
 
     .funcoes ul {
         grid-template-columns: 1fr;
     }
 
-    .logo {
-        width: 140px;
-        height: 140px;
-        padding: 20px;
-        margin-bottom: 20px;
+    .logo-container {
+        width: 80px;
+        height: 80px;
+        padding: 10px;
     }
 }
 
@@ -419,5 +538,30 @@ section:nth-child(5) { animation-delay: 0.4s; }
 }
 
 .status-past .status-dot {
-    background-color: #F44336;  /* Vermelho */
+    background-color: #ccc;
+}
+
+.quarta-indicator {
+    background-color: #ff6b6b;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.7em;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-left: 8px;
+    display: inline-block;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 1;
+    }
 } 
