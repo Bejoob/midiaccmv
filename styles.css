@@ -575,8 +575,9 @@ section:nth-child(5) { animation-delay: 0.4s; }
     font-size: 0.7em;
     font-weight: 600;
     text-transform: uppercase;
-    margin-left: 8px;
-    display: inline-block;
+    margin-left: 0;
+    margin-top: 4px;
+    display: block;
     animation: pulse 2s infinite;
 }
 
