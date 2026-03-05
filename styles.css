@@ -30,13 +30,15 @@ body {
 header {
     text-align: center;
     margin-bottom: 40px;
-    background: linear-gradient(135deg, #d7ccc8 0%, #000000 100%);
+    background: radial-gradient(circle at 0% 0%, #ff9a9e 0%, #fad0c4 25%, #a18cd1 60%, #4b6cb7 100%);
+    background-size: 200% 200%;
     padding: 40px 20px;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
     color: white;
     position: relative;
     overflow: hidden;
+    animation: gradient 12s ease infinite;
 }
 
 header::before {
@@ -60,17 +62,19 @@ header::before {
 }
 
 .logo-container {
-    background: white;
-    width: 120px;
-    height: 120px;
-    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    width: 96px;
+    height: 96px;
+    border-radius: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 18px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
     transition: all 0.3s ease;
-    border: 3px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
 }
 
 .logo-img {
@@ -86,39 +90,48 @@ header::before {
 }
 
 .header-text h1 {
-    font-size: 2.5em;
+    font-size: 2.6em;
     margin-bottom: 10px;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    background: linear-gradient(45deg, #fff, #f0f0f0);
+    letter-spacing: 1px;
+    font-weight: 800;
+    text-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
+    background: linear-gradient(90deg, #ffffff, #ffe082, #ff80ab);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
 .header-text h2 {
-    font-size: 1.4em;
-    opacity: 0.9;
+    font-size: 1.2em;
+    opacity: 0.95;
     font-weight: 500;
     letter-spacing: 1px;
     margin-bottom: 15px;
-    color: #e8e8e8;
+    color: #ffecb3;
 }
 
 .header-subtitle {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
 }
 
 .subtitle-line {
-    font-size: 0.9em;
-    opacity: 0.8;
-    font-weight: 400;
-    letter-spacing: 1px;
-    color: #d0d0d0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    font-size: 0.75em;
+    opacity: 0.9;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: #ffffff;
+    text-transform: uppercase;
 }
 
 .header-decoration {
@@ -293,49 +306,62 @@ tbody tr:hover {
     transform: scale(1.01);
 }
 
+.funcoes {
+    padding: 20px;
+}
+
 .funcoes ul {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
     list-style: none;
     padding: 0;
 }
 
 .funcoes li {
     background-color: var(--secondary-color);
-    padding: 15px;
-    border-radius: 8px;
+    padding: 8px 10px;
+    border-radius: 999px;
     transition: var(--transition);
-    border-left: 4px solid var(--primary-color);
+    border-left: none;
+    display: flex;
+    align-items: center;
 }
 
 .membro-info {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
+    width: 100%;
 }
 
 .avatar {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid var(--primary-color);
+    border: 2px solid var(--primary-color);
     transition: var(--transition);
+    flex-shrink: 0;
 }
 
 .membro-info .texto {
     flex: 1;
+    font-size: 0.85rem;
+}
+
+.membro-info .texto strong {
+    font-size: 0.9rem;
 }
 
 .funcoes li:hover {
     background-color: var(--neutral-color);
-    transform: translateX(5px);
+    transform: translateY(-2px);
 }
 
 .funcoes li:hover .avatar {
-    transform: scale(1.1);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 .observacoes ul, .contatos ul {
@@ -414,7 +440,7 @@ tbody tr:hover {
     }
 
     .funcoes ul {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .logo-container {
