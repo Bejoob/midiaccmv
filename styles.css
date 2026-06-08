@@ -9,24 +9,24 @@
 }
 
 :root {
-  /* Cores principais */
-  --primary:       #7c3aed;
-  --primary-light: #a78bfa;
-  --primary-dark:  #5b21b6;
-  --secondary:     #ec4899;
-  --accent:        #06b6d4;
+  /* Cores principais — Paleta CCMV */
+  --primary:       #A68E6D;
+  --primary-light: #D8C3AA;
+  --primary-dark:  #8B7355;
+  --secondary:     #C4A882;
+  --accent:        #D8C3AA;
 
   /* Fundo e superfície */
-  --bg:        #f5f3ff;
+  --bg:        #F2EDE6;
   --surface:   #ffffff;
-  --surface-2: #faf9ff;
-  --border:    #ede9fe;
-  --border-hover: #c4b5fd;
+  --surface-2: #FAF7F3;
+  --border:    #E8E0D4;
+  --border-hover: #D8C3AA;
 
   /* Texto */
-  --text:       #1e1b4b;
-  --text-muted: #6b7280;
-  --text-light: #9ca3af;
+  --text:       #1A1A1A;
+  --text-muted: #7A6E63;
+  --text-light: #B0A99F;
 
   /* Status */
   --success:     #10b981;
@@ -41,14 +41,14 @@
   --wa-dark: #128c7e;
 
   /* Gradientes */
-  --grad-primary: linear-gradient(135deg, #7c3aed, #ec4899);
-  --grad-header:  linear-gradient(135deg, #4f46e5 0%, #7c3aed 35%, #c026d3 70%, #ec4899 100%);
+  --grad-primary: linear-gradient(135deg, #A68E6D, #D8C3AA);
+  --grad-header:  linear-gradient(135deg, #1A1A1A 0%, #2D2218 35%, #6B5240 70%, #A68E6D 100%);
 
   /* Sombras */
-  --shadow-xs: 0 1px 4px rgba(124, 58, 237, 0.07);
-  --shadow-sm: 0 2px 10px rgba(124, 58, 237, 0.09);
-  --shadow:    0 4px 24px rgba(124, 58, 237, 0.12);
-  --shadow-lg: 0 8px 40px rgba(124, 58, 237, 0.16);
+  --shadow-xs: 0 1px 4px rgba(166, 142, 109, 0.08);
+  --shadow-sm: 0 2px 10px rgba(166, 142, 109, 0.10);
+  --shadow:    0 4px 24px rgba(166, 142, 109, 0.14);
+  --shadow-lg: 0 8px 40px rgba(166, 142, 109, 0.20);
 
   /* Raios */
   --r-sm:   8px;
@@ -82,7 +82,7 @@ header {
   background-size: 300% 300%;
   padding: 44px 32px 34px;
   border-radius: var(--r-lg);
-  box-shadow: 0 20px 60px rgba(79, 70, 229, 0.35);
+  box-shadow: 0 20px 60px rgba(26, 26, 26, 0.40);
   color: white;
   position: relative;
   overflow: hidden;
@@ -256,7 +256,7 @@ header:hover .logo-container {
   align-items: center;
   justify-content: center;
   font-size: 1.3em;
-  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);
+  box-shadow: 0 4px 14px rgba(166, 142, 109, 0.35);
   flex-shrink: 0;
 }
 
@@ -330,8 +330,8 @@ header:hover .logo-container {
 .notif-funcao-tag {
   font-size: 0.68em;
   font-weight: 600;
-  color: var(--primary);
-  background: #f5f3ff;
+  color: var(--primary-dark);
+  background: #F5EFE6;
   border: 1px solid var(--border);
   padding: 1px 8px;
   border-radius: var(--r-full);
@@ -455,7 +455,7 @@ h3::before {
 
 .funcoes li:hover {
   border-color: var(--primary-light);
-  background: #faf5ff;
+  background: #FAF5EC;
   transform: translateY(-2px);
   box-shadow: var(--shadow-xs);
 }
@@ -479,7 +479,7 @@ h3::before {
 .funcoes li:hover .avatar {
   border-color: var(--primary-light);
   transform: scale(1.08);
-  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.2);
+  box-shadow: 0 0 0 3px rgba(216, 195, 170, 0.35);
 }
 
 .membro-info .texto {
@@ -537,7 +537,7 @@ tbody tr:nth-child(even) {
 }
 
 tbody tr:hover td {
-  background: #f5f3ff !important;
+  background: #F5EFE6 !important;
 }
 
 /* ===== STATUS DOTS ===== */
@@ -613,7 +613,7 @@ tbody tr:hover td {
 
 .observacoes li:hover {
   border-color: var(--border-hover);
-  background: #faf5ff;
+  background: #FAF5EC;
 }
 
 .observacoes li::before {
