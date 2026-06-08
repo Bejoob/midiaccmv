@@ -1,9 +1,9 @@
 // Endpoint de teste — NÃO é chamado pelo cron, apenas para validação manual
 // Acesse: https://escalamidiaccmv.vercel.app/api/test-reminder?secret=SEU_CRON_SECRET&phone=55119...&dias=7
 
-import schedule from '../data/schedule.json' assert { type: 'json' };
+const schedule = require('../data/schedule.json');
 
-const ESCALA_URL  = 'https://escalamidiaccmv.vercel.app/';
+const ESCALA_URL = 'https://escalamidiaccmv.vercel.app/';
 
 const MEMBER_PHONES = {
   'Alana':        ['5511957193825'],
@@ -31,7 +31,6 @@ function getMensagem(nome, dataFormatada, diasRestantes) {
 async function sendGreenApi(phone, message) {
   const instanceId = process.env.GREEN_INSTANCE_ID;
   const apiToken   = process.env.GREEN_API_TOKEN;
-
   const url = `https://api.green-api.com/waInstance${instanceId}/sendMessage/${apiToken}`;
 
   const res = await fetch(url, {
@@ -44,8 +43,7 @@ async function sendGreenApi(phone, message) {
   return { ok: res.ok, status: res.status, data };
 }
 
-export default async function handler(req, res) {
-  // Validação do segredo
+module.exports = async function handler(req, res) {
   const { secret, phone, dias } = req.query;
 
   if (secret !== process.env.CRON_SECRET) {
@@ -61,11 +59,8 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'dias deve ser 0, 3 ou 7' });
   }
 
-  // Encontra o próximo serviço na escala que estaria a X dias de hoje
-  const hoje = new Date();
-  const hojeStr = new Date(hoje.getTime() - 3 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  const hojeStr = new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
-  // Acha qualquer entrada da escala para montar uma mensagem de exemplo realista
   const entrada = schedule.find(e => {
     const diff = Math.round(
       (new Date(e.date + 'T00:00:00') - new Date(hojeStr + 'T00:00:00')) / 86400000
@@ -74,16 +69,11 @@ export default async function handler(req, res) {
   }) ?? schedule[0];
 
   const dataFormatada = new Date(entrada.date + 'T12:00:00').toLocaleDateString('pt-BR', {
-    weekday: 'long',
-    day:     '2-digit',
-    month:   'long',
+    weekday: 'long', day: '2-digit', month: 'long',
   });
 
-  // Monta mensagem de teste usando o nome do primeiro membro da entrada
-  const nomeExemplo = entrada.story;
-  const mensagem    = getMensagem(nomeExemplo, dataFormatada, diasSimulados);
+  const mensagem = getMensagem(entrada.story, dataFormatada, diasSimulados);
 
-  // Envia para o número de teste informado
   let resultado;
   try {
     resultado = await sendGreenApi(phone, mensagem);
@@ -91,25 +81,21 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Falha ao chamar Green API', detalhe: err.message });
   }
 
-  // Mostra prévia de quais membros seriam avisados neste cenário real
   const previaReal = schedule
-    .filter(e => {
-      const diff = Math.round(
-        (new Date(e.date + 'T00:00:00') - new Date(hojeStr + 'T00:00:00')) / 86400000
-      );
-      return diff === diasSimulados;
-    })
+    .filter(e => Math.round(
+      (new Date(e.date + 'T00:00:00') - new Date(hojeStr + 'T00:00:00')) / 86400000
+    ) === diasSimulados)
     .flatMap(e => [
       { data: e.date, nome: e.story,  funcao: 'Story',  phones: MEMBER_PHONES[e.story]  ?? [] },
       { data: e.date, nome: e.slides, funcao: 'Slides', phones: MEMBER_PHONES[e.slides] ?? [] },
     ]);
 
   return res.status(200).json({
-    ok:          resultado.ok,
+    ok: resultado.ok,
     teste: {
-      phoneDestino: phone,
+      phoneDestino:     phone,
       diasSimulados,
-      mensagemEnviada: mensagem,
+      mensagemEnviada:  mensagem,
       respostaGreenApi: resultado.data,
     },
     previaReal: {
@@ -117,4 +103,4 @@ export default async function handler(req, res) {
       membros:   previaReal,
     },
   });
-}
+};

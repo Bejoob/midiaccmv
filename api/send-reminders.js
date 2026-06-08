@@ -1,12 +1,11 @@
 // Vercel Serverless Function — roda via cron diariamente às 9h (horário de Brasília)
-// Envia lembretes WhatsApp via Green API (gratuita) para membros da escala de mídia CCMV
+// Envia lembretes WhatsApp via Green API para membros da escala de mídia CCMV
 
-import schedule from '../data/schedule.json' assert { type: 'json' };
+const schedule = require('../data/schedule.json');
 
 const ESCALA_URL  = 'https://escalamidiaccmv.vercel.app/';
 const DIAS_ALERTA = [0, 3, 7];
 
-// Números dos membros: ['membro', 'responsável (opcional)']
 const MEMBER_PHONES = {
   'Alana':        ['5511957193825'],
   'Mell':         ['5511981199183'],
@@ -30,38 +29,28 @@ function getMensagem(nome, dataFormatada, diasRestantes) {
   return `Olá ${nome}! 👋 Passando para lembrar que você está na escala de mídia da CCMV no dia ${dataFormatada} (daqui a 1 semana).\n\nConfira a escala completa: ${ESCALA_URL}\n\nNão se esqueça! Deus abençoe! 😊🙏`;
 }
 
-// Green API: número no formato "5511999998888@c.us"
 async function sendGreenApi(phone, message) {
   const instanceId = process.env.GREEN_INSTANCE_ID;
   const apiToken   = process.env.GREEN_API_TOKEN;
-
   const url = `https://api.green-api.com/waInstance${instanceId}/sendMessage/${apiToken}`;
 
   const res = await fetch(url, {
     method:  'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      chatId:  `${phone}@c.us`,
-      message,
-    }),
+    body: JSON.stringify({ chatId: `${phone}@c.us`, message }),
   });
 
   const data = await res.json();
   return { ok: res.ok, status: res.status, data };
 }
 
-export default async function handler(req, res) {
-  // Vercel injeta Authorization automaticamente nos cron jobs
+module.exports = async function handler(req, res) {
   const authHeader = req.headers['authorization'];
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return res.status(401).json({ error: 'Não autorizado' });
   }
 
-  const hoje = new Date();
-  // Ajusta para horário de Brasília (UTC-3)
-  const hojeStr = new Date(hoje.getTime() - 3 * 60 * 60 * 1000)
-    .toISOString()
-    .slice(0, 10);
+  const hojeStr = new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
   const enviados  = [];
   const ignorados = [];
@@ -75,13 +64,11 @@ export default async function handler(req, res) {
     if (!DIAS_ALERTA.includes(diffDias)) continue;
 
     const dataFormatada = new Date(entry.date + 'T12:00:00').toLocaleDateString('pt-BR', {
-      weekday: 'long',
-      day:     '2-digit',
-      month:   'long',
+      weekday: 'long', day: '2-digit', month: 'long',
     });
 
     for (const [role, nome] of [['Story', entry.story], ['Slides', entry.slides]]) {
-      const phones  = MEMBER_PHONES[nome] || [];
+      const phones   = MEMBER_PHONES[nome] || [];
       const mensagem = getMensagem(nome, dataFormatada, diffDias);
 
       if (phones.length === 0) {
@@ -108,4 +95,4 @@ export default async function handler(req, res) {
     erros:     erros.length,
     detalhes:  { enviados, ignorados, erros },
   });
-}
+};
