@@ -18,6 +18,8 @@ const MEMBER_PHONES = {
   'Marcelo':      ['5511991667330'],
 };
 
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
 function getMensagem(nome, dataFormatada, diasRestantes) {
   if (diasRestantes === 0) {
     return `Olá ${nome}! 🎯 Hoje é o seu dia na escala de mídia da CCMV! Não se esqueça de chegar 30 minutos antes do culto. Deus abençoe! 💪🙏`;
@@ -40,7 +42,8 @@ async function sendGreenApi(phone, message) {
     body: JSON.stringify({ chatId: `${phone}@c.us`, message }),
   });
 
-  const data = await res.json();
+  let data;
+  try { data = await res.json(); } catch (_) { data = { error: 'invalid response' }; }
   return { ok: res.ok, status: res.status, data };
 }
 
@@ -57,14 +60,13 @@ module.exports = async function handler(req, res) {
   const erros     = [];
 
   for (const entry of schedule) {
-    const diffDias = Math.round(
-      (new Date(entry.date + 'T00:00:00') - new Date(hojeStr + 'T00:00:00')) / 86400000
-    );
+    const diffMs   = new Date(entry.date + 'T12:00:00Z') - new Date(hojeStr + 'T12:00:00Z');
+    const diffDias = Math.round(diffMs / 86400000);
 
     if (!DIAS_ALERTA.includes(diffDias)) continue;
 
-    const dataFormatada = new Date(entry.date + 'T12:00:00').toLocaleDateString('pt-BR', {
-      weekday: 'long', day: '2-digit', month: 'long',
+    const dataFormatada = new Date(entry.date + 'T12:00:00Z').toLocaleDateString('pt-BR', {
+      weekday: 'long', day: '2-digit', month: 'long', timeZone: 'UTC',
     });
 
     for (const [role, nome] of [['Story', entry.story], ['Slides', entry.slides]]) {
@@ -79,11 +81,12 @@ module.exports = async function handler(req, res) {
       for (const phone of phones) {
         try {
           const result = await sendGreenApi(phone, mensagem);
-          enviados.push({ nome, role, phone, diffDias, ok: result.ok });
-          if (!result.ok) erros.push({ nome, phone, ...result });
+          enviados.push({ nome, role, phone, diffDias, ok: result.ok, greenApi: result.data });
+          if (!result.ok) erros.push({ nome, phone, status: result.status, data: result.data });
         } catch (err) {
           erros.push({ nome, phone, error: err.message });
         }
+        await sleep(1200); // aguarda 1.2s entre envios para evitar rate limit
       }
     }
   }
