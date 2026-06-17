@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Enviar Escala — Hoje</title>
+  <style>
+    body { font-family: sans-serif; max-width: 520px; margin: 40px auto; padding: 16px; background: #f0fdf4; }
+    h2 { color: #166534; margin-bottom: 4px; }
+    p { color: #4b5563; font-size: 0.9em; margin-bottom: 24px; }
+    .item { display: flex; align-items: center; justify-content: space-between; background: white; border: 1px solid #bbf7d0; border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; gap: 12px; }
+    .nome { font-weight: 700; color: #1e1b4b; }
+    .tag  { font-size: 0.72em; color: #6b7280; display: block; }
+    .btns { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+    a { display: inline-flex; align-items: center; gap: 6px; background: #25d366; color: white; text-decoration: none; padding: 8px 14px; border-radius: 8px; font-size: 0.8em; font-weight: 600; }
+    a:hover { background: #128c7e; }
+    a.resp { background: #0ea5e9; }
+    a.resp:hover { background: #0284c7; }
+    .vazio { color: #6b7280; font-size: 0.95em; }
+  </style>
+</head>
+<body>
+
+<h2>📢 Enviar Escala — Hoje</h2>
+<p>Clique em cada botão para enviar a mensagem no WhatsApp. Só aparece quem está escalado hoje.</p>
+
+<script>
+const schedule = [
+  {"date": "2026-06-07", "story": "Alana",       "slides": "Elo"},
+  {"date": "2026-06-10", "story": "Manuella",    "slides": "Laura Falcão"},
+  {"date": "2026-06-14", "story": "Mell",        "slides": "Marcelo"},
+  {"date": "2026-06-17", "story": "Laura Lavny", "slides": "Elo"},
+  {"date": "2026-06-21", "story": "Alana",       "slides": "Laura Falcão"},
+  {"date": "2026-06-24", "story": "Manuella",    "slides": "Marcelo"},
+  {"date": "2026-06-28", "story": "Mell",        "slides": "Elo"},
+  {"date": "2026-07-01", "story": "Laura Lavny", "slides": "Laura Falcão"},
+  {"date": "2026-07-05", "story": "Alana",       "slides": "Breno"},
+  {"date": "2026-07-08", "story": "Manuella",    "slides": "Elo"},
+  {"date": "2026-07-12", "story": "Mell",        "slides": "Laura Falcão"},
+  {"date": "2026-07-15", "story": "Laura Lavny", "slides": "Marcelo"},
+  {"date": "2026-07-19", "story": "Alana",       "slides": "Elo"},
+  {"date": "2026-07-22", "story": "Manuella",    "slides": "Laura Falcão"},
+  {"date": "2026-07-26", "story": "Mell",        "slides": "Marcelo"},
+  {"date": "2026-07-29", "story": "Laura Lavny", "slides": "Elo"},
+  {"date": "2026-08-02", "story": "Alana",       "slides": "Breno"},
+  {"date": "2026-08-05", "story": "Manuella",    "slides": "Marcelo"},
+  {"date": "2026-08-09", "story": "Mell",        "slides": "Breno"},
+  {"date": "2026-08-12", "story": "Laura Lavny", "slides": "Laura Falcão"},
+  {"date": "2026-08-16", "story": "Alana",       "slides": "Marcelo"},
+  {"date": "2026-08-19", "story": "Manuella",    "slides": "Elo"},
+  {"date": "2026-08-23", "story": "Mell",        "slides": "Laura Falcão"},
+  {"date": "2026-08-26", "story": "Laura Lavny", "slides": "Marcelo"},
+  {"date": "2026-08-30", "story": "Alana",       "slides": "Elo"},
+  {"date": "2026-09-02", "story": "Manuella",    "slides": "Laura Falcão"},
+  {"date": "2026-09-06", "story": "Mell",        "slides": "Breno"},
+  {"date": "2026-09-09", "story": "Laura Lavny", "slides": "Elo"},
+  {"date": "2026-09-13", "story": "Alana",       "slides": "Laura Falcão"},
+  {"date": "2026-09-16", "story": "Manuella",    "slides": "Marcelo"},
+  {"date": "2026-09-20", "story": "Mell",        "slides": "Elo"},
+  {"date": "2026-09-23", "story": "Laura Lavny", "slides": "Laura Falcão"},
+  {"date": "2026-09-27", "story": "Alana",       "slides": "Marcelo"},
+  {"date": "2026-09-30", "story": "Manuella",    "slides": "Elo"},
+  {"date": "2026-10-04", "story": "Mell",        "slides": "Thania"},
+  {"date": "2026-10-07", "story": "Laura Lavny", "slides": "Marcelo"},
+  {"date": "2026-10-11", "story": "Alana",       "slides": "Thania"},
+  {"date": "2026-10-14", "story": "Manuella",    "slides": "Laura Falcão"},
+  {"date": "2026-10-18", "story": "Mell",        "slides": "Marcelo"},
+  {"date": "2026-10-21", "story": "Laura Lavny", "slides": "Elo"},
+  {"date": "2026-10-25", "story": "Alana",       "slides": "Laura Falcão"},
+  {"date": "2026-10-28", "story": "Manuella",    "slides": "Marcelo"},
+  {"date": "2026-11-01", "story": "Mell",        "slides": "Breno"},
+  {"date": "2026-11-04", "story": "Laura Lavny", "slides": "Laura Falcão"},
+  {"date": "2026-11-08", "story": "Alana",       "slides": "Thania"},
+  {"date": "2026-11-11", "story": "Manuella",    "slides": "Elo"},
+  {"date": "2026-11-15", "story": "Mell",        "slides": "Laura Falcão"},
+  {"date": "2026-11-18", "story": "Laura Lavny", "slides": "Marcelo"},
+  {"date": "2026-11-22", "story": "Alana",       "slides": "Thania"},
+  {"date": "2026-11-25", "story": "Manuella",    "slides": "Laura Falcão"},
+  {"date": "2026-11-29", "story": "Mell",        "slides": "Thania"},
+  {"date": "2026-12-02", "story": "Laura Lavny", "slides": "Elo"},
+  {"date": "2026-12-06", "story": "Alana",       "slides": "Breno"},
+  {"date": "2026-12-09", "story": "Manuella",    "slides": "Marcelo"},
+  {"date": "2026-12-13", "story": "Mell",        "slides": "Elo"},
+  {"date": "2026-12-16", "story": "Laura Lavny", "slides": "Laura Falcão"},
+  {"date": "2026-12-20", "story": "Alana",       "slides": "Marcelo"},
+  {"date": "2026-12-23", "story": "Manuella",    "slides": "Elo"},
+  {"date": "2026-12-27", "story": "Mell",        "slides": "Thania"},
+  {"date": "2026-12-30", "story": "Laura Lavny", "slides": "Marcelo"}
+];
+
+const MEMBER_PHONES = {
+  'Alana':        [{ label: 'Enviar',      num: '5511957193825' }],
+  'Mell':         [{ label: 'Enviar',      num: '5511981199183' }],
+  'Manuella':     [{ label: 'Membro',      num: '5511930169319' }, { label: 'Responsável', num: '5511959487095' }],
+  'Laura Lavny':  [{ label: 'Membro',      num: '5511966161095' }, { label: 'Responsável', num: '5511949796394' }],
+  'Breno':        [{ label: 'Enviar',      num: '5511961328712' }],
+  'Thania':       [{ label: 'Enviar',      num: '5511913359244' }],
+  'Laura Falcão': [{ label: 'Membro',      num: '5511914914951' }, { label: 'Responsável', num: '5511945096432' }],
+  'Elo':          [{ label: 'Enviar',      num: '5511960836843' }],
+  'Marcelo':      [{ label: 'Enviar',      num: '5511991667330' }],
+};
+
+const waIcon = `<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>`;
+
+const hojeStr = new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString().slice(0, 10);
+const entry = schedule.find(e => e.date === hojeStr);
+
+if (!entry) {
+  document.write(`<p class="vazio">Nenhuma escala hoje (${hojeStr}). 🎉</p>`);
+} else {
+  const nomes = [...new Set([entry.story, entry.slides])];
+
+  nomes.forEach(nome => {
+    const phones = MEMBER_PHONES[nome] || [];
+    const msg = `Olá ${nome}! 🎯 Hoje é o seu dia na escala de mídia da CCMV! Não se esqueça de chegar 30 minutos antes do culto. Deus abençoe! 💪🙏`;
+    const encoded = encodeURIComponent(msg);
+
+    const btns = phones.map((p, i) =>
+      `<a href="https://wa.me/${p.num}?text=${encoded}" target="_blank" ${i > 0 ? 'class="resp"' : ''}>${waIcon} ${p.label}</a>`
+    ).join('');
+
+    document.write(`
+      <div class="item">
+        <div>
+          <span class="nome">${nome}</span>
+          ${phones.length > 1 ? '<span class="tag">+ responsável</span>' : ''}
+        </div>
+        <div class="btns">${btns}</div>
+      </div>
+    `);
+  });
+}
+</script>
+
+</body>
+</html>
