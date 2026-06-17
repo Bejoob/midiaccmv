@@ -3,8 +3,7 @@
 
 const schedule = require('../data/schedule.json');
 
-const ESCALA_URL  = 'https://escalamidiaccmv.vercel.app/';
-const DIAS_ALERTA = [0, 3, 7];
+const DIAS_ALERTA = [0];
 
 const MEMBER_PHONES = {
   'Alana':        ['5511957193825'],
@@ -20,15 +19,8 @@ const MEMBER_PHONES = {
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-function getMensagem(nome, dataFormatada, diasRestantes) {
-  if (diasRestantes === 0) {
-    return `Olá ${nome}! 🎯 Hoje é o seu dia na escala de mídia da CCMV! Não se esqueça de chegar 30 minutos antes do culto. Deus abençoe! 💪🙏`;
-  }
-  if (diasRestantes <= 3) {
-    const plural = diasRestantes > 1 ? 'dias' : 'dia';
-    return `Olá ${nome}! 😊 Passando para lembrar que você está na escala de mídia da CCMV daqui a ${diasRestantes} ${plural}, no dia ${dataFormatada}.\n\nConfira a escala completa: ${ESCALA_URL}\n\nQualquer dúvida é só chamar! Deus abençoe! 🙏`;
-  }
-  return `Olá ${nome}! 👋 Passando para lembrar que você está na escala de mídia da CCMV no dia ${dataFormatada} (daqui a 1 semana).\n\nConfira a escala completa: ${ESCALA_URL}\n\nNão se esqueça! Deus abençoe! 😊🙏`;
+function getMensagem(nome) {
+  return `Olá ${nome}! 🎯 Hoje é o seu dia na escala de mídia da CCMV! Não se esqueça de chegar 30 minutos antes do culto. Deus abençoe! 💪🙏`;
 }
 
 async function sendGreenApi(phone, message) {
@@ -65,13 +57,9 @@ module.exports = async function handler(req, res) {
 
     if (!DIAS_ALERTA.includes(diffDias)) continue;
 
-    const dataFormatada = new Date(entry.date + 'T12:00:00Z').toLocaleDateString('pt-BR', {
-      weekday: 'long', day: '2-digit', month: 'long', timeZone: 'UTC',
-    });
-
     for (const [role, nome] of [['Story', entry.story], ['Slides', entry.slides]]) {
       const phones   = MEMBER_PHONES[nome] || [];
-      const mensagem = getMensagem(nome, dataFormatada, diffDias);
+      const mensagem = getMensagem(nome);
 
       if (phones.length === 0) {
         ignorados.push({ nome, role, motivo: 'sem número' });

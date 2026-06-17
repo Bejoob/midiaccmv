@@ -3,7 +3,7 @@
 
 const schedule = require('../data/schedule.json');
 
-const DIAS_ALERTA = [0, 3, 7];
+const DIAS_ALERTA = [0];
 
 const MEMBER_PHONES = {
   'Alana':        ['5511957193825'],
@@ -33,7 +33,7 @@ module.exports = function handler(req, res) {
 
     if (!DIAS_ALERTA.includes(diffDias)) continue;
 
-    const label = diffDias === 0 ? 'HOJE' : diffDias === 3 ? '3 dias' : '7 dias';
+    const label = 'HOJE';
 
     for (const [role, nome] of [['Story', entry.story], ['Slides', entry.slides]]) {
       const phones = MEMBER_PHONES[nome] || [];
